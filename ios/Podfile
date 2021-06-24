@@ -12,6 +12,8 @@ target 'SkypeClone' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'SkypeCloneTests' do
     inherit! :complete
     # Pods for testing
