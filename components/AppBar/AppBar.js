@@ -2,6 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import { IconButton } from "react-native-paper";
 import OctIcon from "react-native-vector-icons/Octicons";
+import {
+	Menu,
+	MenuOptions,
+	MenuOption,
+	MenuTrigger,
+} from "react-native-popup-menu";
 
 const AppBar = () => {
 	return (
@@ -20,7 +26,7 @@ const AppBar = () => {
 				<OctIcon
 					name="primitive-dot"
 					color="lime"
-					size={30}
+					size={28}
 					style={styles.activityStatus}
 				/>
 			</ImageBackground>
@@ -39,13 +45,39 @@ const AppBar = () => {
 					onPress={() => console.log("Pressed")}
 					style={styles.actionIcon}
 				/>
-				<IconButton
-					icon="dots-vertical"
-					size={28}
-					color="white"
-					onPress={() => console.log("Pressed")}
-					style={styles.actionIcon}
-				/>
+				<Menu>
+					<MenuTrigger>
+						<IconButton
+							icon="dots-vertical"
+							size={28}
+							color="white"
+							// onPress={() => console.log("Pressed")}
+							style={styles.actionIcon}
+						/>
+					</MenuTrigger>
+					<MenuOptions>
+						<MenuOption
+							onSelect={() => console.log("Menu")}
+							text="Sort by Recent"
+						/>
+						<MenuOption
+							onSelect={() => console.log("Menu")}
+							text="Sort by Unread"
+						/>
+						<MenuOption
+							onSelect={() => console.log("Menu")}
+							text="Sort by Active"
+						/>
+						<MenuOption
+							onSelect={() => console.log("Menu")}
+							text="Hide favourites"
+						/>
+						<MenuOption
+							onSelect={() => console.log("Menu")}
+							text="Enable compact layout"
+						/>
+					</MenuOptions>
+				</Menu>
 			</View>
 		</View>
 	);
@@ -61,6 +93,8 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingHorizontal: 5,
 		justifyContent: "space-between",
+		borderBottomColor: "#777",
+		borderBottomWidth: 0.15,
 	},
 
 	actionBar: {
@@ -87,5 +121,8 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		right: -3,
 		bottom: -8,
+	},
+	menuOptions: {
+		backgroundColor: "#1f1f1f",
 	},
 });

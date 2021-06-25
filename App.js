@@ -9,60 +9,64 @@ import ContactScreen from "./screens/ContactScreen/ContactScreen";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AppBar from "./components/AppBar/AppBar";
 import { Provider as PaperProvider } from "react-native-paper";
+import { MenuProvider } from "react-native-popup-menu";
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
 	return (
 		<PaperProvider>
-			<AppBar />
-			<NavigationContainer>
-				<Tab.Navigator
-					tabBarOptions={{
-						activeTintColor: "#0070db",
-						style: tabStyles,
-					}}>
-					<Tab.Screen
-						name="Chat"
-						component={ChatScreen}
-						options={{
-							tabBarIcon: ({ focused, color }) => (
-								<MaterialIcons
-									name="chat"
-									size={28}
-									color={color}
-								/>
-							),
-						}}
-					/>
-					<Tab.Screen
-						name="Calls"
-						component={CallScreen}
-						options={{
-							tabBarIcon: ({ focused, color }) => (
-								<MaterialIcons
-									name="call"
-									size={28}
-									color={color}
-								/>
-							),
-						}}
-					/>
-					<Tab.Screen
-						name="Contacts"
-						component={ContactScreen}
-						options={{
-							tabBarIcon: ({ focused, color }) => (
-								<MaterialIcons
-									name="contacts"
-									size={28}
-									color={color}
-								/>
-							),
-						}}
-					/>
-				</Tab.Navigator>
-			</NavigationContainer>
+			<MenuProvider>
+				<AppBar />
+
+				<NavigationContainer>
+					<Tab.Navigator
+						tabBarOptions={{
+							activeTintColor: "#0070db",
+							style: tabStyles,
+						}}>
+						<Tab.Screen
+							name="Chat"
+							component={ChatScreen}
+							options={{
+								tabBarIcon: ({ focused, color }) => (
+									<MaterialIcons
+										name="chat"
+										size={28}
+										color={color}
+									/>
+								),
+							}}
+						/>
+						<Tab.Screen
+							name="Calls"
+							component={CallScreen}
+							options={{
+								tabBarIcon: ({ focused, color }) => (
+									<MaterialIcons
+										name="call"
+										size={28}
+										color={color}
+									/>
+								),
+							}}
+						/>
+						<Tab.Screen
+							name="Contacts"
+							component={ContactScreen}
+							options={{
+								tabBarIcon: ({ focused, color }) => (
+									<MaterialIcons
+										name="contacts"
+										size={28}
+										color={color}
+									/>
+								),
+							}}
+						/>
+					</Tab.Navigator>
+				</NavigationContainer>
+			</MenuProvider>
 		</PaperProvider>
 	);
 };
