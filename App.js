@@ -1,15 +1,15 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatScreen from "./screens/ChatScreen/ChatScreen";
 import CallScreen from "./screens/CallScreen/CallScreen";
 import ContactScreen from "./screens/ContactScreen/ContactScreen";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AppBar from "./components/AppBar/AppBar";
 import { Provider as PaperProvider } from "react-native-paper";
 import { MenuProvider } from "react-native-popup-menu";
+import ChatRoutes from "./routes/ChatRoutes";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ const App = () => {
 						}}>
 						<Tab.Screen
 							name="Chat"
-							component={ChatScreen}
+							component={ChatRoutes}
 							options={{
 								tabBarIcon: ({ focused, color }) => (
 									<MaterialIcons
