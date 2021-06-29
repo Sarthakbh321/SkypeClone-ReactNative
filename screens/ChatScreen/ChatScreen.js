@@ -6,7 +6,7 @@ import ChatList from "../../components/ChatList/ChatList";
 const ChatScreen = ({ navigation }) => {
 	return (
 		<View style={globalStyles.container}>
-			<ChatList />
+			<ChatList navigation={navigation} />
 			{/* <Text style={globalStyles.text}>Chat Screen</Text>
 			<Button
 				title="Go to chat"

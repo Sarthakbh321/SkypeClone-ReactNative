@@ -1,17 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import Chat from "../screens/ChatScreen/Chat/Chat";
+import TabRoutes from "./TabRoutes";
 
 const Stack = createStackNavigator();
 
-const ChatRoutes = () => {
+const MainRoutes = () => {
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator initialRouteName="Menus">
 			<Stack.Screen
-				name="Chat List"
-				component={ChatScreen}
+				name="Menus"
+				component={TabRoutes}
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
@@ -23,6 +22,4 @@ const ChatRoutes = () => {
 	);
 };
 
-export default ChatRoutes;
-
-const styles = StyleSheet.create({});
+export default MainRoutes;

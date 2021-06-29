@@ -1,10 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	ImageBackground,
+	TouchableOpacity,
+} from "react-native";
 import OctIcon from "react-native-vector-icons/Octicons";
 
-const ChatListItem = () => {
+const ChatListItem = ({ navigation }) => {
 	return (
-		<View style={styles.itemContainer}>
+		<TouchableOpacity
+			style={styles.itemContainer}
+			onPress={() => navigation.navigate("Personal Chat")}>
 			<View style={styles.left}>
 				<ImageBackground
 					source={require("./img/profile.png")}
@@ -27,7 +35,7 @@ const ChatListItem = () => {
 					<Text style={styles.lastMsg}>Hello, Sarthak!</Text>
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 

@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, Text, ScrollView } from "react-native";
 import ChatListItem from "../ChatListItem/ChatListItem";
 
-const ChatList = () => {
+const ChatList = ({ navigation }) => {
 	return (
 		<ScrollView>
 			{Array(10)
 				.fill()
-				.map(() => (
-					<ChatListItem />
+				.map((item, index) => (
+					<ChatListItem navigation={navigation} key={index} />
 				))}
 		</ScrollView>
 	);
