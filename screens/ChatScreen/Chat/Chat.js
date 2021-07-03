@@ -2,10 +2,14 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { globalStyles } from "../../../App";
 import ChatHeader from "../../../components/ChatHeader/ChatHeader";
-import messages from "../../../utils/messages";
+import messageList from "../../../utils/messages";
 import ChatMessage from "../../../components/ChatMessage/ChatMessage";
+import ChatInputBar from "../../../components/ChatInputBar/ChatInputBar";
+import { useState } from "react";
 
 const Chat = ({ navigation }) => {
+	const [messages, setMessages] = useState(messageList);
+
 	return (
 		<View style={globalStyles.container}>
 			<ChatHeader navigation={navigation} />
@@ -14,6 +18,7 @@ const Chat = ({ navigation }) => {
 					<ChatMessage key={i} message={msg} />
 				))}
 			</ScrollView>
+			<ChatInputBar setMessages={setMessages} />
 		</View>
 	);
 };
