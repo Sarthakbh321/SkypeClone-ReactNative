@@ -1,17 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { globalStyles } from "../../../App";
 import ChatHeader from "../../../components/ChatHeader/ChatHeader";
+import messages from "../../../utils/messages";
+import ChatMessage from "../../../components/ChatMessage/ChatMessage";
 
 const Chat = ({ navigation }) => {
 	return (
 		<View style={globalStyles.container}>
 			<ChatHeader navigation={navigation} />
-			<Text>Chats will be displayed here</Text>
+			<ScrollView style={styles.chatContainer}>
+				{messages.map((msg, i) => (
+					<ChatMessage key={i} message={msg} />
+				))}
+			</ScrollView>
 		</View>
 	);
 };
 
 export default Chat;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	chatContainer: {
+		paddingTop: 20,
+		paddingHorizontal: 5,
+	},
+});
