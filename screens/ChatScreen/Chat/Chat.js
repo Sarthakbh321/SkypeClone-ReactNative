@@ -1,9 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { globalStyles } from "../../../App";
+import ChatHeader from "../../../components/ChatHeader/ChatHeader";
 
-const Chat = () => {
+const Chat = ({ navigation }) => {
 	return (
-		<View>
+		<View style={globalStyles.container}>
+			<ChatHeader navigation={navigation} />
 			<Text>Chats will be displayed here</Text>
 		</View>
 	);
