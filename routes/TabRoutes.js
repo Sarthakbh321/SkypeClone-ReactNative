@@ -9,10 +9,10 @@ import AppBar from "../components/AppBar/AppBar";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabRoutes() {
+export default function TabRoutes({ navigation }) {
 	return (
 		<>
-			<AppBar />
+			<AppBar navigation={navigation} />
 			<Tab.Navigator
 				tabBarOptions={{
 					activeTintColor: "#0070db",

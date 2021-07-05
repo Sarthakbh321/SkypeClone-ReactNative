@@ -9,7 +9,7 @@ import {
 	MenuTrigger,
 } from "react-native-popup-menu";
 
-const AppBar = () => {
+const AppBar = ({ navigation }) => {
 	return (
 		<View style={styles.appBar}>
 			<IconButton
@@ -35,7 +35,7 @@ const AppBar = () => {
 					icon="video-wireless-outline"
 					size={28}
 					color="white"
-					onPress={() => console.log("Pressed")}
+					onPress={() => navigation.navigate("Video Call")}
 					style={styles.actionIcon}
 				/>
 				<IconButton
