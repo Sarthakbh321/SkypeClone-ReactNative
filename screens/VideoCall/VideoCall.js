@@ -27,7 +27,7 @@ const VideoCall = ({ navigation }) => {
 	const [engineObj, setEngineObj] = useState();
 
 	const [muted, setMuted] = useState(false);
-	const [cameraOff, setCameraOff] = useState(false);
+	const [cameraOn, setCameraOn] = useState(true);
 
 	let engine;
 
@@ -38,6 +38,7 @@ const VideoCall = ({ navigation }) => {
 		engine = await RtcEngine.create(appId);
 		setEngineObj(engine);
 		await engine.enableVideo();
+		await engine.enableLocalVideo(true);
 
 		console.log("Sds");
 
@@ -79,8 +80,8 @@ const VideoCall = ({ navigation }) => {
 	};
 
 	const handleCameraBtn = async () => {
-		await engineObj.muteLocalVideoStream(!cameraOff);
-		setCameraOff(!cameraOff);
+		await engineObj.enableLocalVideo(!cameraOn);
+		setCameraOn(!cameraOn);
 	};
 
 	useEffect(() => {
@@ -111,11 +112,13 @@ const VideoCall = ({ navigation }) => {
 				))}
 			</View>
 			<View style={styles.absolute}>
-				<RtcLocalView.SurfaceView
-					style={{ flex: 1, zIndex: 100 }}
-					channelId={channelName}
-					renderMode={VideoRenderMode.Fit}
-				/>
+				{cameraOn ? (
+					<RtcLocalView.SurfaceView
+						style={{ flex: 1, zIndex: 100 }}
+						channelId={channelName}
+						renderMode={VideoRenderMode.Fit}
+					/>
+				) : null}
 			</View>
 			<View style={styles.actionBar}>
 				<FAB
@@ -125,7 +128,7 @@ const VideoCall = ({ navigation }) => {
 				/>
 				<FAB
 					icon="camera"
-					style={cameraOff ? styles.cameraBtnOff : styles.cameraBtn}
+					style={cameraOn ? styles.cameraBtn : styles.cameraBtnOff}
 					onPress={() => handleCameraBtn()}
 				/>
 				<FAB
@@ -157,6 +160,7 @@ const styles = StyleSheet.create({
 		top: 10,
 		right: 10,
 		zIndex: 100,
+		backgroundColor: "#000",
 	},
 	remoteContainer: {
 		flex: 1,
