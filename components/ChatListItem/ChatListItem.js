@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import OctIcon from "react-native-vector-icons/Octicons";
+import messages from "../../utils/messages";
 
 const ChatListItem = ({ navigation }) => {
 	return (
@@ -32,7 +33,9 @@ const ChatListItem = ({ navigation }) => {
 					<Text style={styles.msgDate}>06/30/2021</Text>
 				</View>
 				<View style={styles.bottomRow}>
-					<Text style={styles.lastMsg}>Hello, Sarthak!</Text>
+					<Text style={styles.lastMsg}>
+						{messages[messages.length - 1].text}
+					</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
