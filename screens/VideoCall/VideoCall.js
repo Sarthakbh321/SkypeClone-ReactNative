@@ -12,7 +12,9 @@ import { ActivityIndicator, FAB } from "react-native-paper";
 import { BACKEND_URL } from "@env";
 import axios from "axios";
 
-const VideoCall = ({ navigation }) => {
+const VideoCall = ({ route, navigation }) => {
+	const { isVoice } = route.params;
+
 	/**
 	 * TODO: PUT KEYS INTO ENV
 	 */
@@ -22,12 +24,13 @@ const VideoCall = ({ navigation }) => {
 	);
 	const [channelName, setChannelName] = useState("SkypeClone Sarthak");
 	const [token, setToken] = useState("");
+	const [uid, setUid] = useState();
 	const [joinSucceeded, setJoinSuccess] = useState(false);
 	const [peerIds, setPeerIds] = useState([]);
 	const [engineObj, setEngineObj] = useState();
 
 	const [muted, setMuted] = useState(false);
-	const [cameraOn, setCameraOn] = useState(true);
+	const [cameraOn, setCameraOn] = useState(isVoice ? false : true);
 
 	let engine;
 
@@ -53,12 +56,17 @@ const VideoCall = ({ navigation }) => {
 
 		engine = await RtcEngine.create(appId);
 		setEngineObj(engine);
-		await engine.enableVideo();
-		await engine.enableLocalVideo(true);
+
+		if (isVoice) {
+			await engine.enableAudio();
+		} else {
+			await engine.enableVideo();
+		}
+		// await engine.enableLocalVideo(true);
 
 		console.log("Sds");
 
-		engine.addListener("UserJoined", (uid, elapsed) => {
+		engine.addListener("UserJoined", async (uid, elapsed) => {
 			console.log("UserJoined", uid, elapsed);
 
 			if (peerIds.indexOf(uid) === -1) {
@@ -74,18 +82,24 @@ const VideoCall = ({ navigation }) => {
 
 		engine.addListener("JoinChannelSuccess", (channel, uid, elapsed) => {
 			console.log("Joined");
+			engine.startPreview();
 			setJoinSuccess(true);
 		});
 
 		engine.addListener("Error", err => console.log(err));
 
 		const { token, uid } = await getToken();
+		setUid(uid);
 		console.log(token, uid);
 		await engine.joinChannel(token, channelName, null, uid);
 	};
 
 	const leaveChannel = async () => {
-		if (engine) await engine.leaveChannel();
+		if (engine) {
+			await engine.stopPreview();
+			await engine.leaveChannel();
+			await engine.destroy();
+		}
 		console.log("Left");
 	};
 
@@ -130,16 +144,16 @@ const VideoCall = ({ navigation }) => {
 						style={styles.remoteView}
 						uid={value}
 						channelId={channelName}
-						renderMode={VideoRenderMode.Fit}
+						renderMode={VideoRenderMode.Hidden}
 					/>
 				))}
 			</View>
 			<View style={styles.absolute}>
 				{cameraOn ? (
 					<RtcLocalView.SurfaceView
-						style={{ flex: 1, zIndex: 100 }}
+						style={{ flex: 1 }}
 						channelId={channelName}
-						renderMode={VideoRenderMode.Fit}
+						renderMode={VideoRenderMode.Hidden}
 					/>
 				) : null}
 			</View>
@@ -149,11 +163,15 @@ const VideoCall = ({ navigation }) => {
 					style={muted ? styles.audioBtnMuted : styles.audioBtn}
 					onPress={() => handleMuteBtn()}
 				/>
-				<FAB
-					icon="camera"
-					style={cameraOn ? styles.cameraBtn : styles.cameraBtnOff}
-					onPress={() => handleCameraBtn()}
-				/>
+				{!isVoice ? (
+					<FAB
+						icon="camera"
+						style={
+							cameraOn ? styles.cameraBtn : styles.cameraBtnOff
+						}
+						onPress={() => handleCameraBtn()}
+					/>
+				) : null}
 				<FAB
 					icon="phone"
 					style={styles.endBtn}
@@ -191,21 +209,12 @@ const styles = StyleSheet.create({
 	},
 	remoteContainer: {
 		flex: 1,
-		zIndex: -1,
-		position: "absolute",
-		top: 0,
-		right: 0,
-		width: "100%",
-		height: "100%",
 	},
 	remoteView: {
 		// backgroundColor: "#000",
 		zIndex: -1,
-		position: "absolute",
-		top: 0,
-		right: 0,
-		width: "100%",
-		height: "100%",
+		// position: "absolute",
+		flex: 1,
 	},
 	videoCallContainer: {
 		flex: 1,

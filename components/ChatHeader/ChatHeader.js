@@ -33,14 +33,18 @@ const ChatHeader = ({ navigation }) => {
 					icon="video-wireless-outline"
 					size={28}
 					color="white"
-					onPress={() => navigation.navigate("Video Call")}
+					onPress={() =>
+						navigation.navigate("Video Call", { isVoice: false })
+					}
 					style={styles.actionIcon}
 				/>
 				<IconButton
 					icon="phone"
 					size={28}
 					color="white"
-					onPress={() => console.log("Pressed")}
+					onPress={() =>
+						navigation.navigate("Video Call", { isVoice: true })
+					}
 					style={styles.actionIcon}
 				/>
 			</View>

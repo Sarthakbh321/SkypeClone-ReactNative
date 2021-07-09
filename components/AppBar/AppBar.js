@@ -35,7 +35,9 @@ const AppBar = ({ navigation }) => {
 					icon="video-wireless-outline"
 					size={28}
 					color="white"
-					onPress={() => navigation.navigate("Video Call")}
+					onPress={() =>
+						navigation.navigate("Video Call", { isVoice: false })
+					}
 					style={styles.actionIcon}
 				/>
 				<IconButton
