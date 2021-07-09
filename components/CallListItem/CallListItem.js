@@ -9,6 +9,7 @@ import {
 import OctIcon from "react-native-vector-icons/Octicons";
 import messages from "../../utils/messages";
 import { IconButton } from "react-native-paper";
+import moment from "moment";
 
 const CallListItem = ({ navigation }) => {
 	return (
@@ -33,7 +34,9 @@ const CallListItem = ({ navigation }) => {
 					<Text style={styles.username}>Sarthak Bharadwaj</Text>
 				</View>
 				<View style={styles.bottomRow}>
-					<Text style={styles.lastMsg}>06/30/2021</Text>
+					<Text style={styles.lastMsg}>
+						{moment().format("MM/DD/YYYY")}
+					</Text>
 				</View>
 			</View>
 			<View style={styles.btnContainer}>

@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 import {
 	StyleSheet,
@@ -30,7 +31,9 @@ const ChatListItem = ({ navigation }) => {
 			<View style={styles.right}>
 				<View style={styles.topRow}>
 					<Text style={styles.username}>Sarthak Bharadwaj</Text>
-					<Text style={styles.msgDate}>06/30/2021</Text>
+					<Text style={styles.msgDate}>
+						{moment().format("MM/DD/YYYY")}
+					</Text>
 				</View>
 				<View style={styles.bottomRow}>
 					<Text style={styles.lastMsg}>
