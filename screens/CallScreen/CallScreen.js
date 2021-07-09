@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { globalStyles } from "../../App";
+import CallList from "../../components/CallList/CallList";
 
-const CallScreen = () => {
+const CallScreen = ({ navigation }) => {
 	return (
 		<View style={globalStyles.container}>
-			<Text style={globalStyles.text}>Call Screen</Text>
+			<CallList navigation={navigation} />
+			{/* <Text style={globalStyles.text}>Call Screen</Text> */}
 		</View>
 	);
 };

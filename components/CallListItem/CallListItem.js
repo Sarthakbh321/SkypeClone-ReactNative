@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import OctIcon from "react-native-vector-icons/Octicons";
 import messages from "../../utils/messages";
+import { IconButton } from "react-native-paper";
 
-const ChatListItem = ({ navigation }) => {
+const CallListItem = ({ navigation }) => {
 	return (
 		<TouchableOpacity
 			style={styles.itemContainer}
@@ -30,25 +31,42 @@ const ChatListItem = ({ navigation }) => {
 			<View style={styles.right}>
 				<View style={styles.topRow}>
 					<Text style={styles.username}>Sarthak Bharadwaj</Text>
-					<Text style={styles.msgDate}>06/30/2021</Text>
 				</View>
 				<View style={styles.bottomRow}>
-					<Text style={styles.lastMsg}>
-						{messages[messages.length - 1].text}
-					</Text>
+					<Text style={styles.lastMsg}>06/30/2021</Text>
 				</View>
+			</View>
+			<View style={styles.btnContainer}>
+				<IconButton
+					icon="video-wireless-outline"
+					size={28}
+					color="white"
+					onPress={() =>
+						navigation.navigate("Video Call", { isVoice: false })
+					}
+					style={styles.actionIcon}
+				/>
+				<IconButton
+					icon="phone"
+					size={28}
+					color="white"
+					onPress={() =>
+						navigation.navigate("Video Call", { isVoice: true })
+					}
+					style={styles.actionIcon}
+				/>
 			</View>
 		</TouchableOpacity>
 	);
 };
 
-export default ChatListItem;
+export default CallListItem;
 
 const styles = StyleSheet.create({
 	itemContainer: {
 		flexDirection: "row",
 		paddingHorizontal: 10,
-		// paddingVertical: 10,
+		// paddingVertical: 5,
 	},
 	left: {
 		marginRight: 20,
@@ -63,11 +81,11 @@ const styles = StyleSheet.create({
 	topRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginBottom: 3,
-		paddingTop: 10,
+		paddingTop: 5,
 	},
 	bottomRow: {
-		paddingBottom: 10,
+		marginBottom: 5,
+		paddingBottom: 5,
 	},
 	lastMsg: {
 		color: "#ccc",
@@ -91,5 +109,11 @@ const styles = StyleSheet.create({
 	navImgContainer: {
 		width: 45,
 		height: 45,
+	},
+	btnContainer: {
+		flexDirection: "row",
+	},
+	actionIcon: {
+		marginHorizontal: 0,
 	},
 });

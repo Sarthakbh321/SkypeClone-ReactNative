@@ -60,3 +60,4 @@ buck-out/
 
 # Environment Variables
 .env
+.env.production
