@@ -8,7 +8,9 @@ import RtcEngine, {
 	RtcRemoteView,
 	VideoRenderMode,
 } from "react-native-agora";
-import { FAB } from "react-native-paper";
+import { ActivityIndicator, FAB } from "react-native-paper";
+import { BACKEND_URL } from "@env";
+import axios from "axios";
 
 const VideoCall = ({ navigation }) => {
 	/**
@@ -19,9 +21,7 @@ const VideoCall = ({ navigation }) => {
 		"9d33f38e53854576820ce55fa91c7cf8",
 	);
 	const [channelName, setChannelName] = useState("SkypeClone Sarthak");
-	const [token, setToken] = useState(
-		"006bc353855fafe40108ad901b667e95d12IAB0RPnJILWcFnOPbBs+OUfOecWL4ip0mRSwK4+euhh/7R8E5EsAAAAAEABsKo0tBZroYAEAAQAFmuhg",
-	);
+	const [token, setToken] = useState("");
 	const [joinSucceeded, setJoinSuccess] = useState(false);
 	const [peerIds, setPeerIds] = useState([]);
 	const [engineObj, setEngineObj] = useState();
@@ -30,6 +30,22 @@ const VideoCall = ({ navigation }) => {
 	const [cameraOn, setCameraOn] = useState(true);
 
 	let engine;
+
+	const getToken = async () => {
+		const url = `${BACKEND_URL}/generateToken`;
+		const data = {
+			appId,
+			appCertificate,
+			channelName,
+		};
+
+		try {
+			const res = await axios.post(url, data);
+			return res.data;
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const setup = async () => {
 		// const token = generateToken(appId, appCertificate, channelName);
@@ -57,16 +73,19 @@ const VideoCall = ({ navigation }) => {
 		});
 
 		engine.addListener("JoinChannelSuccess", (channel, uid, elapsed) => {
+			console.log("Joined");
 			setJoinSuccess(true);
 		});
 
 		engine.addListener("Error", err => console.log(err));
 
-		await engine.joinChannel(token, channelName, null, 0);
+		const { token, uid } = await getToken();
+		console.log(token, uid);
+		await engine.joinChannel(token, channelName, null, uid);
 	};
 
 	const leaveChannel = async () => {
-		await engine.leaveChannel();
+		if (engine) await engine.leaveChannel();
 		console.log("Left");
 	};
 
@@ -92,8 +111,12 @@ const VideoCall = ({ navigation }) => {
 
 	if (!joinSucceeded) {
 		return (
-			<View>
-				<Text>Joining...</Text>
+			<View style={[styles.videoCallContainer, styles.center]}>
+				<ActivityIndicator
+					animating={true}
+					color="#0070db"
+					size="large"
+				/>
 			</View>
 		);
 	}
@@ -144,6 +167,10 @@ const VideoCall = ({ navigation }) => {
 export default VideoCall;
 
 const styles = StyleSheet.create({
+	center: {
+		justifyContent: "center",
+		alignItems: "center",
+	},
 	localView: {
 		flex: 1,
 		// zIndex: 100,
